@@ -11,11 +11,11 @@ from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.transaction import TransactionManagementError
 
-#Create your views here.
 # function for homepage view
 def home_view(request):
     return render(request, 'PEPapp/home.html')
 
+#Create your views here.
 # function for getting data from sigunup form
 @csrf_exempt
 def get_signup_data(request):
