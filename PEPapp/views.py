@@ -15,7 +15,7 @@ from django.db.transaction import TransactionManagementError
 def home_view(request):
     return render(request, 'PEPapp/home.html')
 
-#Create your views here.
+#csrf_exempt 
 # function for getting data from sigunup form
 @csrf_exempt
 def get_signup_data(request):
