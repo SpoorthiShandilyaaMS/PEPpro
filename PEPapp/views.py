@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from PEPapp.models import User
 from PEPapp.models import Constituency
+from PEPapp.models import News_Feed
 from django.http import HttpResponse
 import re
 from django.core.validators import RegexValidator
@@ -15,13 +16,15 @@ from django.contrib import messages
 from django.core import serializers
 from django.forms.models import model_to_dict
 import json
+from django.utils import timezone
+import logging
 
 # function for homepage view
 def home_view(request):
     return render(request, 'PEPapp/home.html')
 
 
-#csrf_exempt
+
 
 # function for getting data from sigunup form
 @csrf_exempt
@@ -88,6 +91,7 @@ def login(request):
     if request.method =='POST':
         email = request.POST.get('user_email')
         pwd = request.POST.get('user_password')
+        type = request.POST.get('type')
 
         # if email and pwd not null
         if(email and pwd):
@@ -103,11 +107,13 @@ def login(request):
                             'user_Data' : list(userData),
                         }
                     else:
+                        # email exists but corresponding password is incorrect
                         responseData = {
                             'code': 400,
                             'message': 'Incorrect Password',
                         }
                 else:
+                    # the given email doesnt exists
                     responseData = {
                         'code': 400,
                         'message': 'No user with '+email+' exists.Check email entered!!',
@@ -121,11 +127,139 @@ def login(request):
                 }
                 return JsonResponse(responseData, safe=False)
         else:
+            # responsedata if no email pwd found
             responseData = {
                 'code': 400,
-                'message': 'Enter proper credentials!!',
+                'message': 'Please Enter proper credentials!!',
             }
         return JsonResponse(responseData, safe=False)
 
     else:
         return render(request,'PEPapp/login.html')
+
+
+
+@csrf_exempt
+def add_feed(request):
+    if request.method=='POST':
+        newstitle = request.POST.get('news_title')
+        newsdesc = request.POST.get('news_description')
+        constituencyname = request.POST.get('constituency_name')
+
+
+
+        if(newstitle and newsdesc and constituencyname):
+
+
+            const_id = get_object_or_404(Constituency,constituency_name=constituencyname).constituency
+            # return HttpResponse(const_id)
+            try:
+                reg = News_Feed(feed_title=newstitle,feed_description=newsdesc,constituency_name=constituencyname,constituency_id=const_id)
+                regstatus = reg.save()
+                responseData = {
+                    'code': 200,
+                    'message': 'Successfully added news feed',
+                    }
+                return JsonResponse(responseData)
+
+            except Exception:
+                responseData = {
+                    'code': 500,
+                    'message': 'something went wrong!!',
+                }
+                return JsonResponse(responseData)
+        else:
+            responseData = {
+                'code': 400,
+                'message': 'Please Enter proper Feeds!!',
+            }
+            return JsonResponse(responseData)
+
+
+    else:
+        # add feed is get method
+        return render(request)
+
+
+
+
+
+@csrf_exempt
+def get_all_feeds(request):
+    if request.method == 'GET':
+        const_id=request.GET['const_id']
+
+        if(const_id):
+            try:
+                if News_Feed.objects.filter(constituency_id = const_id).exists():
+                    userData = News_Feed.objects.filter(constituency_id = const_id).order_by('-id').values('id','constituency_name','feed_title','feed_description','feed_date')
+                    responseData ={
+                    'code' : 200,
+                    'msg' : 'successfully news shown',
+                    'data' : list(userData),
+                    }
+                    return JsonResponse(responseData, safe=False)
+                else:
+                    responseData ={
+                    'code' : 400,
+                    'msg' : 'No feeds to show'
+                    }
+                    return JsonResponse(responseData, safe=False)
+
+            except Exception as e:
+                responseData = {
+                    'code': 500,
+                    'message': 'Something went wrong!!',
+                }
+                return JsonResponse(responseData, safe=False)
+
+        else:
+            responseData ={
+            'code' : 400,
+            'msg' : 'Specify Constituency ID'
+            }
+            return JsonResponse(responseData, safe=False)
+
+
+
+
+
+@csrf_exempt
+def edit_feed(request):
+    if request.method=='POST':
+        feedid = request.POST.get('feed_id')
+        newstitle = request.POST.get('news_title')
+        newsdesc = request.POST.get('news_description')
+        constituencyname = request.POST.get('constituency_name')
+
+
+
+        if(newstitle and newsdesc and constituencyname and feedid):
+
+            try:
+                # if News_Feed.objects.filter(id=feedid):
+                reg = News_Feed(feed_title=newstitle,feed_description=newsdesc,constituency_name=constituencyname,constituency_id=const_id)
+                regstatus = reg.save()
+                responseData = {
+                    'code': 200,
+                    'message': 'Successfully added news feed',
+                    }
+                return JsonResponse(responseData)
+
+            except Exception:
+                responseData = {
+                    'code': 500,
+                    'message': 'something went wrong!!',
+                }
+                return JsonResponse(responseData)
+        else:
+            responseData = {
+                'code': 400,
+                'message': 'Please Enter proper Feeds!!',
+            }
+            return JsonResponse(responseData)
+
+
+    else:
+        # add feed is get method
+        return render(request)

@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+import pytz
 
 # Create your models here.
 class Constituency(models.Model):
@@ -21,10 +23,10 @@ class User(models.Model):
 
 
 class News_Feed(models.Model):
-    feed_id=models.IntegerField(primary_key=True)
+    # feed_id=models.IntegerField(primary_key=True)
     feed_title=models.CharField(max_length=50,null=False)
     feed_description=models.CharField(max_length=400,null=False)
-    feed_date=models.DateField(auto_now=True)
+    feed_date=models.DateTimeField(auto_now=True,null=True,blank=True)
     constituency_name=models.CharField(max_length=20,null=False)
     constituency=models.ForeignKey(Constituency,on_delete=models.CASCADE)
 

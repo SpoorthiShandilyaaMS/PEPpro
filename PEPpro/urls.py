@@ -22,5 +22,7 @@ urlpatterns = [
     path('',views.home_view,name='homeview'),
     path('signup',views.get_signup_data,name='signup'),
     path('login',views.login,name='login'),
+    path('addFeed',views.add_feed,name='addfeed'),
+    path('getAllFeeds',views.get_all_feeds,name='getAllFeeds')
 
 ]

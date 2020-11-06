@@ -14,7 +14,7 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(News_Feed)
 class UserAdmin(admin.ModelAdmin):
-    list_display=['feed_id','feed_title','feed_description','feed_date','constituency_name','constituency']
+    list_display=['feed_title','feed_description','feed_date','constituency_name','constituency']
 
 
 @admin.register(Sector)
