@@ -2,76 +2,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-    
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <meta charset="UTF-8">
+
+
+
+
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <!-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> -->
+
 </head>
 <title>signup</title>
+
 <body>
-
-<h2><center>SIGN UP</center></h2>
-<div class="container">
-<form method="post" action="/signup">
-{% csrf_token %}
- <div class="card card-image"
-    style="background-image: url('https://mdbootstrap.com/img/Photos/Others/pricing-table7.jpg'); background-size:cover;background-attachment:relative;width:100%;height:750px;">
-    <div class="text-black rgba-stylish-strong py-5 px-5 z-depth-4">
-<div class="form-row">
-    
-
-      <label for="Name"><b>Name*</b></label>
-      <input type="text" class="form-control" id="inputName">
-    </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4"><b>Email*</b></label>
-      <input type="email" class="form-control" placeholder="emailxyz@123" id="inputEmail4">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4"><b>Password*</b></label>
-      <input type="password" class="form-control" placeholder="password@123"id="inputPassword4">
-    </div>
-  </div>
-  <div class="form-column">
-  <div class="form-group md-6">
-    <label for="inputphonenumber"><b>Phone Number<b></label>
-    <input type="Number" class="form-control" id="inputPhoneNumber" placeholder="12345678">
-  </div>
-  <div>
- 
-    <div class="form-group col-md-6">
-      <label for="inputState"><b>Choose constituency*</b></label>
-      <select id="inputState" class="form-control">
-      <option>Choose</option>
-        <option>Basavanagudi</option>
-        <option>Bommanahalli</option>
-        <option>BTM Layout</option>
-        <option>Jayanagar</option>
-        <option>Mahadevapura</option>
-        <option>RR Nagar</option>
-        <option>Vijayanagar</option>
-        <option>Yelhanka</option>
-      </select>
-    </div></p>
-    
-  <div class="form-group">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck">
-      <label class="form-check-label" for="gridCheck">
-        Check me out
-      </label>
-    </div>
-  </div>
-  
-<a href="#" class="btn btn-primary btn-primary">submit <span class="glyphicon glyphicon-arrow-right"></span></a>
-</form>
-
-</div>
-</div>
-</div>
-</div>
-
-
+  <section class="container">
+    <div class="row justify-content-md-center margin-bottom-50 margin-top-50">
+      <div class="col col-md-10">
+        <div class="card text-center shadow mb-5">
+          <div class="card-body" style="padding: 10px;">
+            <form class="margin-top-30 needs-validation" id="signup-form">
+              {% csrf_token %}
+              <div class="card card-image"
+                style="background-image: url('https://mdbootstrap.com/img/Photos/Others/pricing-table7.jpg'); background-size:cover;background-attachment:relative;width:100%;height:750px;">
+                <div class="text-black rgba-stylish-strong py-5 px-5 z-depth-4">
+                  <h1 class="text-center" style="color: #af6a6a; font-weight: bold">Create an account</h1>
+                  <div class="row align-items-center">
+                    <div class="form-group col-md-6">
+                      <label for="user_name"><b>Name*</b></label>
+                      <input type="text" class="form-control" name="user_name" id="user_name">
+                    </div>
+                  </div>
+                  <div class="row align-items-center">
+                    <div class="form-group col-md-6">
+                      <label for="user_email"><b>Email*</b></label>
+                      <input type="email" class="form-control" name="user_email" placeholder="emailxyz@123"
+                        id="user_email">
+                    </div>
+                  </div>
+                  <div class="row align-items-center">
+                    <div class="form-group col-md-6">
+                      <label for="user_password"><b>Password*</b></label>
+                      <input type="password" class="form-control" name="user_password" placeholder="password@123"
+                        id="user_password">
+                    </div>
+                  </div>
+                  <div class="row align-items-center">
+                    <div class="form-group col-md-6">
+                      <label for="user_mobile"><b>Phone Number<b></label>
+                      <input type="text" class="form-control" name="user_mobile" id="user_mobile"
+                        placeholder="8989899876">
+                    </div>
+                  </div>
+                  <div class="row align-items-center">
+                    <div class="form-group col-md-4">
+                      <label for="user_constituency"><b>Choose constituency*</b></label>
+                      <select id="user_constituency" name="user_constituency" class="form-control">
+                        <option value="Basavangudi">Basavanagudi</option>
+                        <option>Bommanahalli</option>
+                        <option>BTM Layout</option>
+                        <option>Jayanagar</option>
+                        <option>Mahadevapura</option>
+                        <option value="rrnagar">RR Nagar</option>
+                        <option>Vijayanagar</option>
+                        <option value="yeshwanthpur">Yeshwanthpur</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <button class="btn btn-success bg-blue-dark col-12" id="signup" type="submit">Create an
+                      account now
+                    </button>
+                  </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  </section>
 </body>
+
 </html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script>
+  $(document).ready(function () {
+    $(document).on('submit', '#signup-form', function (e) {
+      e.preventDefault();
+
+      //get form data
+      var form = document.getElementById('signup-form');
+      var formData = new FormData(form);
+      $.ajax({
+        url: "/signup",
+        data: formData,
+        cache: false,
+        processData: false,
+        contentType: false,
+        type: 'POST',
+        beforeSend: function () {
+        },
+        success: function (response) {
+          if (response['code'] == 200) {
+            document.getElementById("signup-form").reset();
+            if (response['message'])
+              Swal.fire({
+                title: 'Success!',
+                text: response['message'],
+                icon: 'success'
+              })
+            setTimeout(function () {
+              window.location = '/login';
+            }, 2000);
+
+          } else if (response['code'] == 400) {
+            Swal.fire({
+              title: 'Error!',
+              text: response['message'],
+              icon: 'error',
+              confirmButtonText: 'OK'
+            })
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: response['message'],
+              icon: 'error',
+              confirmButtonText: 'OK'
+            })
+          }
+
+
+        },
+        error: function (error) {
+          Swal.fire({
+            title: 'Error!',
+            text: "Something went wrong . Try again!!!",
+            icon: 'error',
+            confirmButtonText: 'OK'
+          })
+        }
+      })
+    });
+  });
+</script>
